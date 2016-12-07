@@ -1,5 +1,6 @@
 package com.niit.collab.model;
 
+
 import java.util.Date;
 
 public class OutputMessage extends Message{

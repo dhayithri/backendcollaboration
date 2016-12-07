@@ -1,5 +1,6 @@
 package com.niit.collab.model;
 
+
 public class Message {
 
 	private String message;

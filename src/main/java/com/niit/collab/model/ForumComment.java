@@ -1,5 +1,7 @@
 package com.niit.collab.model;
 
+
+
 import java.util.Date;
 
 import javax.persistence.Column;

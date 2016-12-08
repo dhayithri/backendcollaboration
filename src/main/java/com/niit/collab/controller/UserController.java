@@ -1,6 +1,5 @@
 package com.niit.collab.controller;
 
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,26 +16,28 @@ import com.niit.collab.model.Users;
 
 @RestController
 public class UserController {
-@Autowired
-private UsersDAO usersDAO;
+	@Autowired
+	private UsersDAO usersDAO;
 
-@PostMapping(value="/register")
-public ResponseEntity<Users> adduser(@RequestBody Users users){
-	System.out.println("hello");
-	users.setStatus('n');
-	usersDAO.saveOrUpdate(users);
-	return new ResponseEntity<Users>(users, HttpStatus.OK);
-	
-}
-@GetMapping(value="/users")
-public ResponseEntity<List<Users>> listuser(){
-	System.out.println("list of users");
-	List<Users> users1 =usersDAO.list();
-	return new ResponseEntity<List<Users>>(users1,HttpStatus.OK);
-}
-@GetMapping(value="/oneuser/{id}")
-public ResponseEntity<List<Users>> oneuser(@PathVariable("id") int id){
-	List<Users> oneuser=usersDAO.getuser(id);
-	return new ResponseEntity<List<Users>>(oneuser,HttpStatus.OK);
-}
+	@PostMapping(value = "/register")
+	public ResponseEntity<Users> adduser(@RequestBody Users users) {
+		System.out.println("hello");
+		users.setStatus('n');
+		usersDAO.saveOrUpdate(users);
+		return new ResponseEntity<Users>(users, HttpStatus.OK);
+
+	}
+
+	@GetMapping(value = "/users")
+	public ResponseEntity<List<Users>> listuser() {
+		System.out.println("list of users");
+		List<Users> users1 = usersDAO.list();
+		return new ResponseEntity<List<Users>>(users1, HttpStatus.OK);
+	}
+
+	@GetMapping(value = "/oneuser/{id}")
+	public ResponseEntity<List<Users>> oneuser(@PathVariable("id") int id) {
+		List<Users> oneuser = usersDAO.getuser(id);
+		return new ResponseEntity<List<Users>>(oneuser, HttpStatus.OK);
+	}
 }

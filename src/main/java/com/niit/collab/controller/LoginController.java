@@ -15,22 +15,24 @@ import com.niit.collab.model.Users;
 
 @RestController
 public class LoginController {
-	@Autowired 
+	@Autowired
 	UsersDAO usersDAO;
 
 	@GetMapping("/login/{username}/{password}")
-	public ResponseEntity<Users> login( @PathVariable("username") String username,@PathVariable("password") String password ,HttpSession session){
-		Users users = usersDAO.authuser(username,password);
-		if(users==null)
-			{	return null;
-	}else{
-		session.setAttribute("userLogged", users);
-		session.setAttribute("uid", users.getId());
-		users.setStatus('o');
-		usersDAO.saveOrUpdate(users);
-		return new ResponseEntity<Users>(users,HttpStatus.OK);
+	public ResponseEntity<Users> login(@PathVariable("username") String username,
+			@PathVariable("password") String password, HttpSession session) {
+		Users users = usersDAO.authuser(username, password);
+		if (users == null) {
+			return null;
+		} else {
+			session.setAttribute("userLogged", users);
+			session.setAttribute("uid", users.getId());
+			users.setStatus('o');
+			usersDAO.saveOrUpdate(users);
+			return new ResponseEntity<Users>(users, HttpStatus.OK);
+		}
 	}
-	}
+
 	@PostMapping("/logout")
 	public ResponseEntity<Users> logout(HttpSession session){
 		int uid =  (Integer) session.getAttribute("uid");
@@ -39,5 +41,5 @@ public class LoginController {
 		usersDAO.saveOrUpdate(users);
 		session.invalidate();
 		return new ResponseEntity<Users>(users,HttpStatus.OK);
-	}
+}
 }

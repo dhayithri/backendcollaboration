@@ -1,6 +1,5 @@
 package com.niit.collab.model;
 
-
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -14,7 +13,7 @@ import org.springframework.stereotype.Component;
 @Table
 @Component
 public class Event {
-	
+
 	@Id
 	@GeneratedValue
 	private int id;
@@ -22,38 +21,45 @@ public class Event {
 	private String description;
 	private Date eventdate;
 	private int userid;
-	
-	
+
 	public int getId() {
 		return id;
 	}
+
 	public void setId(int id) {
 		this.id = id;
 	}
+
 	public String getTitle() {
 		return title;
 	}
+
 	public void setTitle(String title) {
 		this.title = title;
 	}
+
 	public String getDescription() {
 		return description;
 	}
+
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
 	public Date getEventdate() {
 		return eventdate;
 	}
+
 	public void setEventdate(Date eventdate) {
 		this.eventdate = eventdate;
 	}
+
 	public int getUserid() {
 		return userid;
 	}
+
 	public void setUserid(int userid) {
 		this.userid = userid;
 	}
-	
-	
+
 }

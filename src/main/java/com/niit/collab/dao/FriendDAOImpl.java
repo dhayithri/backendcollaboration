@@ -13,16 +13,17 @@ import org.springframework.transaction.annotation.Transactional;
 import com.niit.collab.model.Friend;
 
 @SuppressWarnings("deprecation")
-@Repository(value="FriendDAO")
+@Repository(value = "FriendDAO")
 public class FriendDAOImpl implements FriendDAO {
 
 	@Autowired
 	private SessionFactory sessionFactory;
-	public FriendDAOImpl(SessionFactory sessionFactory){
-		this.sessionFactory=sessionFactory;
+
+	public FriendDAOImpl(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
 	}
-	
-   @Transactional
+
+	@Transactional
 	public boolean saveOrUpdate(Friend friend) {
 		try {
 			sessionFactory.getCurrentSession().saveOrUpdate(friend);
@@ -33,7 +34,7 @@ public class FriendDAOImpl implements FriendDAO {
 		}
 	}
 
-   @Transactional
+	@Transactional
 	public boolean delete(Friend friend) {
 		try {
 			sessionFactory.getCurrentSession().delete(friend);
@@ -44,50 +45,47 @@ public class FriendDAOImpl implements FriendDAO {
 		}
 	}
 
-   @Transactional
+	@Transactional
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public Friend getFriend(int id) {
-		String hql = "from Friend where id= "+ "'"+ id+"'" ;
-		Query query=sessionFactory.getCurrentSession().createQuery(hql);
-		List<Friend>list= query.list();
-		
-		if(list==null)
-		{
+		String hql = "from Friend where id= " + "'" + id + "'";
+		Query query = sessionFactory.getCurrentSession().createQuery(hql);
+		List<Friend> list = query.list();
+
+		if (list == null) {
 			return null;
-		}
-		else
-		{
+		} else {
 			return list.get(0);
 		}
 	}
-	
-@Transactional
+
+	@Transactional
 	@SuppressWarnings("unchecked")
 	public List<Friend> list() {
-		Criteria c=sessionFactory.getCurrentSession().createCriteria(Friend.class);
+		Criteria c = sessionFactory.getCurrentSession().createCriteria(Friend.class);
 		List<Friend> list = c.list();
 		return list;
 	}
 
-@SuppressWarnings({ "rawtypes", "unchecked" })
-@Transactional
-public Friend newrequest(int id) {
-	String hql="from Friend where fid = "+"'"+id+"'"+"and status= 'n'";
-	Query query =sessionFactory.getCurrentSession().createQuery(hql);
-	List<Friend> list=query.list();
-	if(list==null){
-		return null;
-	}else{
-		return list.get(0);
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@Transactional
+	public Friend newrequest(int id) {
+		String hql = "from Friend where fid = " + "'" + id + "'" + "and status= 'n'";
+		Query query = sessionFactory.getCurrentSession().createQuery(hql);
+		List<Friend> list = query.list();
+		if (list == null) {
+			return null;
+		} else {
+			return list.get(0);
+		}
 	}
-}
 
-@Transactional
-public List<Friend> getfriendlist(int uid) {
-	String hql="from Friend where userid= "+uid;
-	Query query=sessionFactory.getCurrentSession().createQuery(hql);
-	List<Friend> list = query.list();
-	return list;
-}
+	@Transactional
+	public List<Friend> getfriendlist(int uid) {
+		String hql = "from Friend where userid= " + uid;
+		Query query = sessionFactory.getCurrentSession().createQuery(hql);
+		List<Friend> list = query.list();
+		return list;
+	}
 
 }

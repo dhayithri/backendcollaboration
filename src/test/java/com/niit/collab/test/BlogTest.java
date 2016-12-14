@@ -21,7 +21,7 @@ public class BlogTest {
 
 		Blog blog = (Blog) context.getBean("blog");
 
-		//blog.setId(3);
+		//blog.setId(5);
 		blog.setTitle("APPle");
 		blog.setContent("this is mobile category");
 		blog.setUserid(12);

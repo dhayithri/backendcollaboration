@@ -1,5 +1,6 @@
 package com.niit.collab.dao;
 
+
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -11,14 +12,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.niit.collab.model.Forum;
 
-@Repository(value = "forumDAO")
+@Repository(value="forumDAO")
 public class ForumDAOImpl implements ForumDAO {
-
+	
 	@Autowired
 	private SessionFactory sessionFactory;
-
 	public ForumDAOImpl(SessionFactory sessionFactory) {
-		this.sessionFactory = sessionFactory;
+		this.sessionFactory=sessionFactory;
 	}
 
 	@Transactional
@@ -42,26 +42,27 @@ public class ForumDAOImpl implements ForumDAO {
 			return false;
 		}
 	}
-
-	@Transactional
+@Transactional
 	@SuppressWarnings("deprecation")
 	public List<Forum> list() {
-		Criteria c = sessionFactory.getCurrentSession().createCriteria(Forum.class);
+		Criteria c=sessionFactory.getCurrentSession().createCriteria(Forum.class);
 		@SuppressWarnings("unchecked")
-		List<Forum> list = c.list();
+		List<Forum> list=c.list();
 		return list;
 	}
-
-	@Transactional
+@Transactional
 	@SuppressWarnings({ "deprecation", "unchecked", "rawtypes" })
 	public Forum getforum(int id) {
-		String hql = "from Forum where id= " + "'" + id + "'";
-		Query query = sessionFactory.getCurrentSession().createQuery(hql);
-		List<Forum> list = query.list();
-
-		if (list == null) {
+		String hql = "from Forum where id= "+ "'"+ id+"'" ;
+		Query query=sessionFactory.getCurrentSession().createQuery(hql);
+		List<Forum>list= query.list();
+		
+		if(list==null)
+		{
 			return null;
-		} else {
+		}
+		else
+		{
 			return list.get(0);
 		}
 	}

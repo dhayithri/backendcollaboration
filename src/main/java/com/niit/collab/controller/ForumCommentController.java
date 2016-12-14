@@ -17,27 +17,28 @@ import org.springframework.web.bind.annotation.RestController;
 import com.niit.collab.dao.ForumCommentDAO;
 import com.niit.collab.model.ForumComment;
 
+
+
 @RestController
 public class ForumCommentController {
 
 	@Autowired
 	private ForumCommentDAO forumCommentDAO;
-
-	@PostMapping(value = "/commentforum/{fid}")
-	public ResponseEntity<ForumComment> forumcomment(@RequestBody ForumComment forumcomment, HttpSession session,
-			@PathVariable("fid") int fid) {
-		int uid = (Integer) session.getAttribute("uid");
+	
+	@PostMapping(value="/commentforum/{fid}")
+	public ResponseEntity<ForumComment> forumcomment(@RequestBody ForumComment forumcomment,HttpSession session,@PathVariable("fid") int fid){
+		int uid=(Integer) session.getAttribute("uid");
 		forumcomment.setForumid(fid);
 		forumcomment.setUserid(uid);
 		forumcomment.setCommenttime(new Date());
 		forumCommentDAO.saveOrUpdate(forumcomment);
-		return new ResponseEntity<ForumComment>(forumcomment, HttpStatus.OK);
-
+		return new ResponseEntity<ForumComment>(forumcomment,HttpStatus.OK);
+		
 	}
-
-	@GetMapping(value = "/getforumcomment/{fid}")
-	public ResponseEntity<List<ForumComment>> getcomment(@PathVariable("fid") int fid) {
-		List<ForumComment> comments = forumCommentDAO.list(fid);
-		return new ResponseEntity<List<ForumComment>>(comments, HttpStatus.OK);
+	
+	@GetMapping(value="/getforumcomment/{fid}")
+	public ResponseEntity<List<ForumComment>> getcomment(@PathVariable("fid") int fid){
+		List<ForumComment> comments =forumCommentDAO.list(fid);
+		return new ResponseEntity<List<ForumComment>>(comments,HttpStatus.OK);
 	}
 }

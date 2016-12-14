@@ -1,5 +1,6 @@
 package com.niit.collab.controller;
 
+
 import java.util.Date;
 
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -11,9 +12,9 @@ import com.niit.collab.model.OutputMessage;
 
 @Controller
 public class ChatController {
-	@MessageMapping("/chat")
-	@SendTo("/topic/message")
-	public OutputMessage sendMessage(Message message) {
-		return new OutputMessage(message, new Date());
-	}
+@MessageMapping("/chat")
+@SendTo("/topic/message")
+public OutputMessage sendMessage(Message message){
+	return new OutputMessage(message,new Date());
+}
 }

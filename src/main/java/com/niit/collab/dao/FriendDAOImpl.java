@@ -88,4 +88,28 @@ public class FriendDAOImpl implements FriendDAO {
 		return list;
 	}
 
+	@Override
+	public Friend newrequest(String uid, String fid) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Friend> getfriendlist(String uid) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Friend> getrequestlist(String uid) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Friend> setonline(String uid) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

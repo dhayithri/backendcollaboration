@@ -23,30 +23,33 @@ public class ForumController {
 
 	@Autowired
 	ForumDAO forumDAO;
+
 	@PostMapping("/createforum")
-	public ResponseEntity<Forum> createforum(@RequestBody Forum forum,HttpSession session){
-		int uid=(Integer) session.getAttribute("uid");
+	public ResponseEntity<Forum> createforum(@RequestBody Forum forum, HttpSession session) {
+		int uid = (Integer) session.getAttribute("uid");
 		forum.setDoc(new Date());
 		forum.setUserid(uid);
 		forumDAO.saveOrUpdate(forum);
-		return new ResponseEntity<Forum>(forum ,HttpStatus.OK);
+		return new ResponseEntity<Forum>(forum, HttpStatus.OK);
 	}
-	
-	@GetMapping(value="/forum")
-	public ResponseEntity<List<Forum>> listforum(){
+
+	@GetMapping(value = "/forum")
+	public ResponseEntity<List<Forum>> listforum() {
 		System.out.println("list of blog");
-		List<Forum> forum =forumDAO.list();
-		return new ResponseEntity<List<Forum>>(forum,HttpStatus.OK);
+		List<Forum> forum = forumDAO.list();
+		return new ResponseEntity<List<Forum>>(forum, HttpStatus.OK);
 	}
-	@DeleteMapping(value="/deleteforum/{forumid}")
-	public ResponseEntity<Forum> deleteforum(Forum forum,@PathVariable("forumid") int forumid){
-		Forum forum1=forumDAO.getforum(forumid);
+
+	@DeleteMapping(value = "/deleteforum/{forumid}")
+	public ResponseEntity<Forum> deleteforum(Forum forum, @PathVariable("forumid") int forumid) {
+		Forum forum1 = forumDAO.getforum(forumid);
 		forumDAO.delete(forum1);
-		return new ResponseEntity<Forum>(forum,HttpStatus.OK);
+		return new ResponseEntity<Forum>(forum, HttpStatus.OK);
 	}
-	@GetMapping(value="/individualforum/{id}")
-	public ResponseEntity<Forum> individualforum(@PathVariable("id") int id){
-		Forum forum=forumDAO.getforum(id);
-		return new ResponseEntity<Forum>(forum,HttpStatus.OK);
+
+	@GetMapping(value = "/individualforum/{id}")
+	public ResponseEntity<Forum> individualforum(@PathVariable("id") int id) {
+		Forum forum = forumDAO.getforum(id);
+		return new ResponseEntity<Forum>(forum, HttpStatus.OK);
 	}
 }

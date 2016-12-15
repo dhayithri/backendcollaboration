@@ -1,6 +1,6 @@
 package com.niit.collab.controller;
 
-
+import java.util.List;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -20,53 +20,55 @@ import com.niit.collab.model.Users;
 
 @RestController
 public class LoginController {
-	@Autowired 
+	@Autowired
 	UsersDAO usersDAO;
 	@Autowired
 	FriendDAO friendDAO;
 
 	@GetMapping("/login/{username}/{password}")
-	public ResponseEntity<List<Users>> login( @PathVariable("username") String username,@PathVariable("password") String password ,HttpSession session){
-		Users users = usersDAO.authuser(username,password);
-		if(users==null)
-			{	return null;
-	}else if(friendDAO.getfriendlist(username)==null){
-		session.setAttribute("userLogged", users);
-		session.setAttribute("uid", users.getId());
-		session.setAttribute("username",users.getUsername());
-		users.setStatus('o');
-		usersDAO.saveOrUpdate(users);
-		List<Users> users1=usersDAO.getuser(users.getId());
-		return new ResponseEntity<List<Users>>(users1,HttpStatus.OK);
-	}else{
-		session.setAttribute("userLogged", users);
-		session.setAttribute("uid", users.getId());
-		session.setAttribute("username",users.getUsername());
-		users.setStatus('o');
-		usersDAO.saveOrUpdate(users);
-    	List<Friend> friend=friendDAO.setonline(users.getUsername());
-    	for(int i=0;i<friend.size();i++){
-    		Friend online=friend.get(i);
-    		online.setIsonline('o');
-    		friendDAO.saveOrUpdate(online);
-    	}
-		List<Users> users1=usersDAO.getuser(users.getId());
-		return new ResponseEntity<List<Users>>(users1,HttpStatus.OK);
+	public ResponseEntity<List<Users>> login(@PathVariable("username") String username,
+			@PathVariable("password") String password, HttpSession session) {
+		Users users = usersDAO.authuser(username, password);
+		if (users == null) {
+			return null;
+		} else if (friendDAO.getfriendlist(username) == null) {
+			session.setAttribute("userLogged", users);
+			session.setAttribute("uid", users.getId());
+			session.setAttribute("username", users.getUsername());
+			users.setStatus('o');
+			usersDAO.saveOrUpdate(users);
+			List<Users> users1 = usersDAO.getuser(users.getId());
+			return new ResponseEntity<List<Users>>(users1, HttpStatus.OK);
+		} else {
+			session.setAttribute("userLogged", users);
+			session.setAttribute("uid", users.getId());
+			session.setAttribute("username", users.getUsername());
+			users.setStatus('o');
+			usersDAO.saveOrUpdate(users);
+			List<Friend> friend = friendDAO.setonline(users.getUsername());
+			for (int i = 0; i < friend.size(); i++) {
+				Friend online = friend.get(i);
+				online.setIsonline('o');
+				friendDAO.saveOrUpdate(online);
+			}
+			List<Users> users1 = usersDAO.getuser(users.getId());
+			return new ResponseEntity<List<Users>>(users1, HttpStatus.OK);
+		}
 	}
-	}
+
 	@PostMapping("/logout")
-	public ResponseEntity<Users> logout(HttpSession session){
-		int uid =  (Integer) session.getAttribute("uid");
-		Users users =usersDAO.oneuser(uid);
+	public ResponseEntity<Users> logout(HttpSession session) {
+		int uid = (Integer) session.getAttribute("uid");
+		Users users = usersDAO.oneuser(uid);
 		users.setStatus('f');
 		usersDAO.saveOrUpdate(users);
-		List<Friend> friend=friendDAO.setonline(users.getUsername());
-		for(int i=0;i<friend.size();i++){
-    		Friend online=friend.get(i);
-    		online.setIsonline('f');
-    		friendDAO.saveOrUpdate(online);
-    	}
+		List<Friend> friend = friendDAO.setonline(users.getUsername());
+		for (int i = 0; i < friend.size(); i++) {
+			Friend online = friend.get(i);
+			online.setIsonline('f');
+			friendDAO.saveOrUpdate(online);
+		}
 		session.invalidate();
-		return new ResponseEntity<Users>(users,HttpStatus.OK);
+		return new ResponseEntity<Users>(users, HttpStatus.OK);
 	}
 }

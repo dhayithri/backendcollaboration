@@ -7,14 +7,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.niit.collab.model.Event;
 
-@Repository(value="eventDAO")
+@Repository(value = "eventDAO")
 public class EventDAOImpl implements EventDAO {
 
 	@Autowired
 	private SessionFactory sessionFactory;
+
 	public EventDAOImpl(SessionFactory sessionFactory) {
-		this.sessionFactory=sessionFactory;
+		this.sessionFactory = sessionFactory;
 	}
+
 	@Transactional
 	public boolean saveOrUpdate(Event event) {
 		try {

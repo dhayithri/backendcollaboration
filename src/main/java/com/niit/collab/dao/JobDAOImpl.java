@@ -10,14 +10,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.niit.collab.model.Job;
 
-@Repository(value="jobDAO")
+@Repository(value = "jobDAO")
 public class JobDAOImpl implements JobDAO {
 
 	@Autowired
 	private SessionFactory sessionFactory;
+
 	public JobDAOImpl(SessionFactory sessionFactory) {
-		this.sessionFactory=sessionFactory;
+		this.sessionFactory = sessionFactory;
 	}
+
 	@Transactional
 	public boolean saveOrUpdate(Job job) {
 		try {
@@ -43,9 +45,9 @@ public class JobDAOImpl implements JobDAO {
 
 	@SuppressWarnings({ "unchecked", "deprecation" })
 	@Transactional
-	public List<Job> list(){
-		Criteria c=sessionFactory.getCurrentSession().createCriteria(Job.class);
-		List<Job> list=c.list();
+	public List<Job> list() {
+		Criteria c = sessionFactory.getCurrentSession().createCriteria(Job.class);
+		List<Job> list = c.list();
 		return list;
 	}
 }

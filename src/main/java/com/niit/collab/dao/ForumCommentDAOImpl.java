@@ -12,14 +12,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.niit.collab.model.ForumComment;
 
-@Repository(value="forumCommentDAOImpl")
+@Repository(value = "forumCommentDAOImpl")
 public class ForumCommentDAOImpl implements ForumCommentDAO {
 
 	@Autowired
 	private SessionFactory sessionFactory;
+
 	public ForumCommentDAOImpl(SessionFactory sessionFactory) {
-		this.sessionFactory=sessionFactory;
+		this.sessionFactory = sessionFactory;
 	}
+
 	@Transactional
 	public boolean saveOrUpdate(ForumComment forumcomment) {
 		try {
@@ -29,7 +31,7 @@ public class ForumCommentDAOImpl implements ForumCommentDAO {
 			e.printStackTrace();
 			return false;
 		}
-		
+
 	}
 
 	@Transactional
@@ -46,9 +48,9 @@ public class ForumCommentDAOImpl implements ForumCommentDAO {
 	@SuppressWarnings({ "unchecked", "deprecation" })
 	@Transactional
 	public List<ForumComment> list(int fid) {
-		Criteria c=sessionFactory.getCurrentSession().createCriteria(ForumComment.class);
+		Criteria c = sessionFactory.getCurrentSession().createCriteria(ForumComment.class);
 		c.add(Restrictions.eq("forumid", fid));
-		List<ForumComment> list=c.list();
+		List<ForumComment> list = c.list();
 		return list;
 	}
 

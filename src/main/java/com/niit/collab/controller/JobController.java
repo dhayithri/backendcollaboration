@@ -1,6 +1,5 @@
 package com.niit.collab.controller;
 
-
 import java.util.Date;
 import java.util.List;
 
@@ -22,18 +21,19 @@ public class JobController {
 
 	@Autowired
 	private JobDAO jobDAO;
-	
-	@PostMapping(value="/createjob")
-	public ResponseEntity<Job> createjob(@RequestBody Job job,HttpSession session){
-		int uid=(Integer) session.getAttribute("uid");
+
+	@PostMapping(value = "/createjob")
+	public ResponseEntity<Job> createjob(@RequestBody Job job, HttpSession session) {
+		int uid = (Integer) session.getAttribute("uid");
 		job.setUserid(uid);
 		job.setDoc(new Date());
 		jobDAO.saveOrUpdate(job);
-		return new ResponseEntity<Job>(job,HttpStatus.OK);
+		return new ResponseEntity<Job>(job, HttpStatus.OK);
 	}
-	@GetMapping(value="/getjobs")
-	public ResponseEntity<List<Job>> getjobs(){
-		List<Job> jobs =jobDAO.list();
-		return new ResponseEntity<List<Job>>(jobs,HttpStatus.OK);
+
+	@GetMapping(value = "/getjobs")
+	public ResponseEntity<List<Job>> getjobs() {
+		List<Job> jobs = jobDAO.list();
+		return new ResponseEntity<List<Job>>(jobs, HttpStatus.OK);
 	}
 }
